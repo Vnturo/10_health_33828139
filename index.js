@@ -6,6 +6,7 @@ var mysql = require('mysql2');
 var session = require ('express-session')
 const expressSanitizer = require('express-sanitizer');
 const { check, validationResult } = require('express-validator');
+const baseUrl = process.env.HEALTH_BASE_PATH || '';
 
 // Create the express application object
 const app = express()

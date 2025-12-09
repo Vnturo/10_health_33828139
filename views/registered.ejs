@@ -57,13 +57,20 @@
     <header>
         <h1>Health Tracker</h1>
         <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About Us</a></li>
-                <li><a href="/users/register">Register</a></li>
-                <li><a href="/users/login">Login</a></li>
-            </ul>
-        </nav>
+    <ul>
+        <li><a href="<%= baseUrl %>/">Home</a></li>
+        <li><a href="<%= baseUrl %>/about">About Us</a></li>
+
+        <% if (typeof user !== 'undefined' && user) { %>
+            <li><a href="<%= baseUrl %>/workouts/list">My Workouts</a></li>
+            <li><a href="<%= baseUrl %>/goals">My Goals</a></li>
+            <li><a href="<%= baseUrl %>/users/logout">Logout</a></li>
+        <% } else { %>
+            <li><a href="<%= baseUrl %>/users/register">Register</a></li>
+            <li><a href="<%= baseUrl %>/users/login">Login</a></li>
+        <% } %>
+    </ul>
+</nav>
     </header>
 
     <main class="main-container">

@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
+const baseUrl = process.env.HEALTH_BASE_PATH || '';
 
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId ) {
-      res.redirect('../users/login')
+      res.redirect(baseUrl + '/users/login')
     } else { 
         next ();
     } 
@@ -43,7 +44,7 @@ router.post('/added', redirectLogin,
     db.query(sqlquery, newrecord, (err, result) => {
         if (err) { next(err); }
         else {
-            res.redirect('/workouts/list'); 
+            res.redirect(baseUrl + '/workouts/list')
         }
     });
 });
