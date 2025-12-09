@@ -99,7 +99,7 @@
         <section class="card card-purple">
             <h2>Log a New Weight</h2>
             <p>Update your current weight here.</p>
-            <form action="/goals/log-weight" method="POST" style="display: flex; gap: 10px; align-items: flex-end;">
+            <form action="log-weight" method="POST" style="display: flex; gap: 10px; align-items: flex-end;">
                 <div>
                     <label>Date:</label><br>
                     <input type="date" name="date" required value="<%= new Date().toISOString().split('T')[0] %>">
@@ -146,7 +146,7 @@
 
         <section class="card card-purple">
             <h2>Edit Goals & Profile</h2>
-            <form action="/goals/update" method="POST">
+            <form action="update" method="POST">
                 <div style="margin-bottom: 15px;">
                     <label>Height (cm):</label>
                     <input type="number" name="height" value="<%= data.height_cm %>" required>
