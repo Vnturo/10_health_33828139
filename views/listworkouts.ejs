@@ -58,7 +58,7 @@
             </div>
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             <script>
-                fetch('/api/workouts')
+                fetch('<%= baseUrl %>/api/workouts')
                     .then(response => response.json())
                     .then(data => {
                         const recentData = data.slice(0, 10); 
