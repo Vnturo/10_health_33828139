@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Tracker</title>
+    <link rel="stylesheet" type= "text/css" href="/style.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Health Tracker</h1>
+        
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+
+                <% if (user) { %>
+                    <li><a href="/workouts/list">My Workouts</a></li>
+                    <li><a href="/goals">My Goals</a></li>
+                    <li><a href="/users/logout">Logout</a></li>
+                <% } else { %>
+                    <li><a href="/users/register">Register</a></li>
+                    <li><a href="/users/login">Login</a></li>
+                <% } %>
+            </ul>
+        </nav>
+
+    </header>
+    <main>
+        <section>
+            <% if (user) { %>
+                <h2>Welcome back, <%= user %>!</h2>
+                <p>Ready to hit your goals today?</p>
+                <div style="text-align: center; margin-top: 20px;">
+                    <a href="/workouts/add" class="btn-add">Log a Workout</a>
+
+                    <a href="/goals" class="btn-add">View Goals</a>
+                </div>
+            <% } else { %>
+                <h2>Track Your Workouts</h2>
+                <p>Log your daily workouts and monitor your progress over time.</p>
+                <p><strong><a href="/users/register">Register now</a></strong> to get started!</p>
+            <% } %>
+        </section>
+        
+    </main>
+    <footer>
+        <p>&copy; 2025 Health Tracker. All rights reserved.</p>
+    </footer>
+</body>
+</html>

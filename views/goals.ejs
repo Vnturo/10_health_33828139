@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Fitness Goals</title>
+    <link rel="stylesheet" type= "text/css" href="/style.css">
+    <style>
+        .goals-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .progress-bar-bg {
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            height: 20px;
+            width: 100%;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .progress-bar-fill {
+            background-color: #667eea;
+            height: 100%;
+            transition: width 0.5s ease-in-out;
+        }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 10px; border-bottom: 1px solid #ddd; text-align: center; }
+        th { background-color: #f8f9fa; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Fitness Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/workouts/list">My Workouts</a></li>
+                <li><a href="/goals">My Goals</a></li>
+                <li><a href="/users/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="goals-container">
+        
+        <section class="card card-purple">
+            <h2 style="color: rgb(102, 80, 153); border-bottom: 1px solid #eee; padding-bottom: 10px;">Your Progress</h2>
+            
+            <div style="display: flex; justify-content: space-around; text-align: center; margin-top: 20px;">
+                <div>
+                    <h3 style="color: #666; font-size: 14px; text-transform: uppercase;">Start</h3>
+                    <p style="color: #333; font-size: 28px; font-weight: bold; margin: 5px 0;">
+                        <%= data.start_weight %> <span style="font-size: 16px; color: #888;">kg</span>
+                    </p>
+                </div>
+                <div>
+                    <h3 style="color: rgb(102, 80, 153); font-size: 16px; text-transform: uppercase; font-weight: bold;">Current</h3>
+                    <p style="color: rgb(102, 80, 153); font-size: 36px; font-weight: bold; margin: 0;">
+                        <%= currentWeight %> <span style="font-size: 18px; color: rgb(102, 80, 153);">kg</span>
+                    </p>
+                </div>
+                <div>
+                    <h3 style="color: #666; font-size: 14px; text-transform: uppercase;">Target</h3>
+                    <p style="color: #333; font-size: 28px; font-weight: bold; margin: 5px 0;">
+                        <%= data.target_weight %> <span style="font-size: 16px; color: #888;">kg</span>
+                    </p>
+                </div>
+            </div>
+
+            <div style="margin-top: 25px;">
+                <p style="margin-bottom: 5px; color: #555;"><strong>Progress to Goal: <%= progress %>%</strong></p>
+                <div class="progress-bar-bg" style="background-color: #f0f0f0;">
+                    <div class="progress-bar-fill" style="width: <%= progress %>%; background-color: #4caf50;"></div>
+                </div>
+            </div>
+            
+        </section>
+
+        <section class="card card-purple">
+            <h2 style="color: #333; font-size: 18px; margin-bottom: 10px;">Health Status (BMI)</h2>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div style="font-size: 40px; font-weight: bold; color: rgb(102, 80, 153);">
+                    <%= bmi %>
+                </div>
+                <div>
+                    <p style="margin: 0; font-size: 16px; font-weight: bold;">Category: <%= bmiCategory %></p>
+                    <p style="margin: 0; color: gray; font-size: 14px;">Based on your current weight and height.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card card-purple">
+            <h2>Log a New Weight</h2>
+            <p>Update your current weight here.</p>
+            <form action="/goals/log-weight" method="POST" style="display: flex; gap: 10px; align-items: flex-end;">
+                <div>
+                    <label>Date:</label><br>
+                    <input type="date" name="date" required value="<%= new Date().toISOString().split('T')[0] %>">
+                </div>
+                <div>
+                    <label>Weight (kg):</label><br>
+                    <input type="number" step="0.1" name="weight" required placeholder="e.g. 75.5">
+                </div>
+                <button type="submit" style="margin-bottom: 2px;">Log Entry</button>
+            </form>
+        </section>
+
+        <section class="card card-purple">
+            <h2>Recent Weight History</h2>
+            <p style="font-size: 14px; color: gray;">If your weight is stuck, check this list and delete incorrect entries.</p>
+            
+            <% if (weightHistory.length > 0) { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date Recorded</th>
+                            <th>Weight (kg)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% weightHistory.forEach(function(entry) { %>
+                            <tr>
+                                <td><%= new Date(entry.date).toLocaleDateString() %></td>
+                                <td style="font-weight: bold;"><%= entry.weight %> kg</td>
+                                <td>
+                                    <a href="/goals/delete/<%= entry.id %>" 
+                                       onclick="return confirm('Delete this weight entry?');"
+                                       style="color: red; text-decoration: none; font-weight: bold;">X</a>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            <% } else { %>
+                <p>No weight history yet.</p>
+            <% } %>
+        </section>
+
+        <section class="card card-purple">
+            <h2>Edit Goals & Profile</h2>
+            <form action="/goals/update" method="POST">
+                <div style="margin-bottom: 15px;">
+                    <label>Height (cm):</label>
+                    <input type="number" name="height" value="<%= data.height_cm %>" required>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label>Starting Weight (kg):</label>
+                    <input type="number" step="0.1" name="start_weight" value="<%= data.start_weight %>" required>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label>Target Weight (kg):</label>
+                    <input type="number" step="0.1" name="target_weight" value="<%= data.target_weight %>" required>
+                </div>
+                <button type="submit" style="background-color: #555;">Update Profile Settings</button>
+            </form>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Health Tracker</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Health Tracker</title>
+    <link rel="stylesheet" type= "text/css" href="/style.css">
+</head>
+<body>
+    <header>
+        <h1>About Health Tracker</h1>
+        
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+
+                <% if (user) { %>
+                    <li><a href="/workouts/list">My Workouts</a></li>
+                    <li><a href="/goals">My Goals</a></li>
+                    <li><a href="/users/logout">Logout</a></li>
+                <% } else { %>
+                    <li><a href="/users/register">Register</a></li>
+                    <li><a href="/users/login">Login</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Our Mission</h2>
+            <p>At Health Tracker, our mission is to empower individuals to lead healthier lives through effective workout and nutrition tracking.</p>
+        </section>
+        
+        <section>
+            <h2>Contact Us</h2>
+            <p>If you have any questions or feedback, feel free to reach out to us at:
+            <a href="mailto:Goldsmiths@campus.ac.uk">Goldsmiths@campus.ac.uk</a>
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Health Tracker. All rights reserved.</p>
+    </footer>
+</body>
+</html>

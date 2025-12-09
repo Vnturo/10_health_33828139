@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome Back</title>
+    <link rel="stylesheet" type= "text/css" href="/style.css">
+</head>
+<body>
+    <header>
+        <h1>Health Tracker Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/workouts/list">My Workouts</a></li>
+                <li><a href="/goals">My Goals</a></li>
+                <li><a href="/users/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Welcome back, <%= user.first_name %>!</h2>
+            <p>You are now logged in as <strong><%= user.username %></strong>.</p>
+            
+            <div style="margin-top: 30px; display: flex; gap: 20px; justify-content: center;">
+    
+        <a href="/workouts/add" class="btn-add">Log a Workout</a>
+
+        <a href="/goals" class="btn-add">View Goals</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Health Tracker</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Workouts</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: center; }
+        th { background-color: #f8f9fa; color: #333; font-weight: bold; }
+        tr:hover { background-color: #f1f1f1; }
+        
+        .btn-add {
+            background-color: #667eea;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-add:hover { background-color: #5a6fd6; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Health Tracker</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/workouts/list">My Workouts</a></li>
+                <li><a href="/goals">My Goals</a></li>
+                <li><a href="/users/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        
+        <section class="card card-purple">
+            <h2>Calorie Burn History</h2>
+            <div style="width: 100%; height: 300px;">
+                <canvas id="workoutChart"></canvas>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                fetch('/api/workouts')
+                    .then(response => response.json())
+                    .then(data => {
+                        const recentData = data.slice(0, 10); 
+
+                        const dates = recentData.map(w => new Date(w.date).toLocaleDateString());
+                        const calories = recentData.map(w => w.calories);
+                        
+                        const ctx = document.getElementById('workoutChart').getContext('2d');
+                        new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: dates.reverse(), 
+                                datasets: [{
+                                    label: 'Calories (Last 10 Workouts)',
+                                    data: calories.reverse(),
+                                    backgroundColor: 'rgba(102, 126, 234, 0.6)',
+                                    borderColor: '#667eea',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: { responsive: true, maintainAspectRatio: false }
+                        });
+                    });
+            </script>
+        </section>
+
+        <section class="card card-purple">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="margin: 0;">My Workout History</h2>
+                <a href="/workouts/add" class="btn-add">+ Log New Workout</a>
+            </div>
+
+            <form action="/workouts/search-result" method="GET" style="margin-bottom: 20px; display: flex; gap: 10px;">
+                <input type="text" name="keyword" placeholder="Search (e.g., Run, Yoga)..." style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                <button type="submit" style="padding: 10px 20px; margin: 0; background-color: #d1cfcf;">Search</button>
+            </form>
+
+            <% if (availableWorkouts.length > 0) { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Workout Name</th>
+                            <th>Duration</th>
+                            <th>Calories</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% availableWorkouts.forEach(function(workout) { %>
+                            <tr>
+                                <td style="color: #666; font-size: 0.9em;">
+                                    <%= new Date(workout.date).toLocaleDateString() %> <br>
+                                    <span style="font-size: 0.8em;"><%= new Date(workout.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %></span>
+                                </td>
+                                <td style="font-weight: bold; color: #333;"><%= workout.name %></td>
+                                <td><%= workout.duration %> mins</td>
+                                <td style="color: #2e7d32; font-weight: bold;"><%= workout.calories %> kcal</td>
+                                <td>
+                                    <a href="/workouts/delete/<%= workout.id %>" 
+                                       onclick="return confirm('Are you sure you want to delete this workout?');"
+                                       style="color: #e53935; text-decoration: none; font-weight: bold; font-size: 1.2em;">&times;</a>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            <% } else { %>
+                <div style="text-align: center; padding: 40px; color: gray;">
+                    <p>No workouts found.</p>
+                    <p>Start tracking your progress by adding a workout above!</p>
+                </div>
+            <% } %>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Health Tracker</p>
+    </footer>
+</body>
+</html>
