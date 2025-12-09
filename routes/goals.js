@@ -87,7 +87,7 @@ router.post('/update', redirectLogin, [
         }
         db.query(sql, params, (err, result) => {
             if (err) return next(err);
-            res.redirect(baseUrl + '/goals');
+            res.redirect('../goals');
         });
     });
 });
@@ -101,7 +101,7 @@ router.post('/log-weight', redirectLogin, [
     let params = [req.session.userId, req.body.weight, req.body.date];
     db.query(sql, params, (err, result) => {
         if (err) return next(err);
-        res.redirect(baseUrl + '/goals');
+        res.redirect('../goals');
     });
 });
 
@@ -110,7 +110,7 @@ router.get('/delete/:id', redirectLogin, function (req, res, next) {
     let sql = "DELETE FROM weight_history WHERE id = ? AND username = ?";
     db.query(sql, [req.params.id, req.session.userId], (err, result) => {
         if (err) return next(err);
-        res.redirect(baseUrl + '/goals');
+        res.redirect('../goals');
     });
 });
 

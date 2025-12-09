@@ -5,7 +5,7 @@ const baseUrl = process.env.HEALTH_BASE_PATH || '';
 
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId ) {
-      res.redirect(baseUrl + '/users/login')
+      res.redirect('../users/login')
     } else { 
         next ();
     } 
@@ -44,7 +44,7 @@ router.post('/added', redirectLogin,
     db.query(sqlquery, newrecord, (err, result) => {
         if (err) { next(err); }
         else {
-            res.redirect(baseUrl + '/workouts/list')
+            res.redirect('../workouts/list')
         }
     });
 });
@@ -68,7 +68,7 @@ router.get('/delete/:id', redirectLogin, function(req, res, next) {
     let sql = "DELETE FROM workouts WHERE id = ? AND username = ?";
     db.query(sql, [req.params.id, req.session.userId], (err, result) => {
         if (err) return next(err);
-        res.redirect('/workouts/list');
+        res.redirect('../workouts/list');
     });
 });
 module.exports = router;

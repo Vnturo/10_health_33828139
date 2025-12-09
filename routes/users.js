@@ -6,7 +6,7 @@ const baseUrl = process.env.HEALTH_BASE_PATH || '';
 
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId ) {
-      res.redirect(baseUrl + '/users/login')
+      res.redirect('../users/login')
     } else { 
         next ();
     } 
