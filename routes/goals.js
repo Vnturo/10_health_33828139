@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 
+
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId) {
         res.redirect('../users/login');
@@ -86,7 +87,7 @@ router.post('/update', redirectLogin, [
         }
         db.query(sql, params, (err, result) => {
             if (err) return next(err);
-            res.redirect('/goals');
+            res.redirect(baseUrl + '/goals');
         });
     });
 });
@@ -100,7 +101,7 @@ router.post('/log-weight', redirectLogin, [
     let params = [req.session.userId, req.body.weight, req.body.date];
     db.query(sql, params, (err, result) => {
         if (err) return next(err);
-        res.redirect('/goals');
+        res.redirect(baseUrl + '/goals');
     });
 });
 
@@ -109,7 +110,7 @@ router.get('/delete/:id', redirectLogin, function (req, res, next) {
     let sql = "DELETE FROM weight_history WHERE id = ? AND username = ?";
     db.query(sql, [req.params.id, req.session.userId], (err, result) => {
         if (err) return next(err);
-        res.redirect('/goals');
+        res.redirect(baseUrl + '/goals');
     });
 });
 

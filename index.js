@@ -26,6 +26,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 // Define our application-specific data
 app.locals.shopData = {shopName: "Health Tracker", ownerName: "Admin"};
 
+app.locals.baseUrl = process.env.HEALTH_BASE_PATH || '';
+
 // Define the database connection pool
 const db = mysql.createPool({
     host: process.env.HEALTH_HOST,
