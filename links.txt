@@ -1,0 +1,9 @@
+home=https://www.doc.gold.ac.uk/usr/201/
+about=https://www.doc.gold.ac.uk/usr/201/about
+register=https://www.doc.gold.ac.uk/usr/201/users/register
+login=https://www.doc.gold.ac.uk/usr/201/users/login
+my_workouts=https://www.doc.gold.ac.uk/usr/201/workouts/list
+add_workout=https://www.doc.gold.ac.uk/usr/201/workouts/add
+my_goals=https://www.doc.gold.ac.uk/usr/201/goals
+search_results=https://www.doc.gold.ac.uk/usr/201/workouts/search-result?keyword=run
+api_endpoint=https://www.doc.gold.ac.uk/usr/201/api/workouts
