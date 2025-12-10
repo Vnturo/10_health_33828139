@@ -72,9 +72,11 @@ Create a file named `.env` in the root directory of the project. Add your databa
 
 ```env
 HEALTH_HOST=localhost
-HEALTH_USER=root
+HEALTH_USER=health_app
 HEALTH_PASSWORD=your_mysql_password
 HEALTH_DATABASE=health
+HEALTH_BASE_PATH=http://localhost:8000
+PORT=8000
 ```
 Note: Replace `your_mysql_password` with your own MySQL password
 
@@ -90,6 +92,7 @@ if successful, you will see a message indicating the server is running (usually 
 
 ### 6. Accessing the App
 Open your browser and navigate to: `https://localhost:8000`
+A list of links to the live application deployed can be found in `links.txt` in the root directory
 
 ## Project Structure
 
