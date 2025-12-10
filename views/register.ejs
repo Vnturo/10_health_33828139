@@ -72,6 +72,16 @@
         button[type="submit"]:hover {
             background-color: rgb(75, 50, 120);
         }
+        .consent-text {
+            font-size: 12px;
+            color: #666;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 15px;
+            border-left: 3px solid #ccc;
+            line-height: 1.4;
+        }
     </style>
 </head>
 <body>
@@ -131,6 +141,10 @@
                 <div style="margin-bottom: 20px;">
                     <label for="password">Password (Min 8 characters):</label>
                     <input type="password" id="password" name="password" required minlength="8" placeholder="••••••••">
+                </div>
+                
+                <div class="consent-text">
+                    By clicking Register, you agree to the collection and processing of your personal data (including health metrics) for the purpose of tracking your fitness progress. We use cookies to manage your session security.
                 </div>
 
                 <button type="submit">Register</button>
